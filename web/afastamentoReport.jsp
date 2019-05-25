@@ -13,11 +13,12 @@
     </head>
     <body>
 
-        <h>Relatório de Funcionários</h>
-        <form action="RelatorioFuncParamController" method="post">
+        <h>Relatório de Afastamentos por funcionário</h>
+        <form action="RelatorioAfastamentoParamController" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>
         </form>
+
     </body>
 </html>

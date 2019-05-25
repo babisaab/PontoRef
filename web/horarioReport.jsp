@@ -12,12 +12,12 @@
         <title>Relatório</title>
     </head>
     <body>
-
-        <h>Relatório de Funcionários</h>
-        <form action="RelatorioFuncParamController" method="post">
+        <h>Relatório de Horários por funcionário</h>
+        <form action="RelatorioHorarioParamController" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>
         </form>
+
     </body>
 </html>
