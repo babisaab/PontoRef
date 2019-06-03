@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Ponto implements Serializable {
+public class Ponto implements EntidadeBase, Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

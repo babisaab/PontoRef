@@ -25,24 +25,6 @@ public class MainTest {
         Ponto p4 = new Ponto("13:00", "15:00", fun, h4);
         Ponto p5 = new Ponto("13:00", "15:00", fun, h5);
         
-        DepartamentoDAO.getInstance().salvar(dep);
-        CargoDAO.getInstance().salvar(cargo);
-        FuncionarioDAO.getInstance().salvar(fun);
-        UsuarioDAO.getInstance().salvar(usu);
-        ContatoDAO.getInstance().salvar(contatinho);
-        AfastamentoDAO.getInstance().salvar(a1);
-        AfastamentoDAO.getInstance().salvar(a2);
-        CartaoDAO.getInstance().salvar(card);
-        InformeDAO.getInstance().salvar(info);
-        HorarioDAO.getInstance().salvar(h1);
-        HorarioDAO.getInstance().salvar(h2);
-        HorarioDAO.getInstance().salvar(h3);
-        HorarioDAO.getInstance().salvar(h4);
-        HorarioDAO.getInstance().salvar(h5);
-        PontoDAO.getInstance().salvar(p1);
-        PontoDAO.getInstance().salvar(p2);
-        PontoDAO.getInstance().salvar(p3);
-        PontoDAO.getInstance().salvar(p4);
-        PontoDAO.getInstance().salvar(p5);
+       
     }
 }
