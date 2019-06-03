@@ -1,7 +1,6 @@
 package controller;
 
-import dao.AfastamentoDAO;
-import dao.FuncionarioDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,6 +14,9 @@ import model.Afastamento;
 import model.Funcionario;
 
 public class ManterAfastamentoController extends HttpServlet {
+    DaoGenerico<Afastamento> daoAfastamento = new DaoGenerico<>();
+        DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
+
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -35,23 +37,23 @@ public class ManterAfastamentoController extends HttpServlet {
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdAfastamento").trim());
 
-                AfastamentoDAO.getInstance().excluir(AfastamentoDAO.getInstance().getAfastamento(id));
+                daoAfastamento.remove(Afastamento.class,id );
             } else {
                 String inicio = request.getParameter("txtInicioAfastamento");
                 String termino = request.getParameter("txtTerminoAfastamento");
                 String justificativa = request.getParameter("txtJustificativaAfastamento");
                 String tipo = request.getParameter("txtTipo");
                 Long idFuncionario = Long.parseLong(request.getParameter("optFuncionario"));
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(idFuncionario);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, idFuncionario);
                 Afastamento afastamento = new Afastamento(inicio, termino, justificativa, tipo, funcionario);
                 if (operacao.equals("Incluir")) {
-                    AfastamentoDAO.getInstance().salvar(afastamento);
+                    daoAfastamento.saveOrUpdate(afastamento);
                 } else {
                     if (operacao.equals("Editar")) {
                         Long id = Long.parseLong(request.getParameter("txtIdAfastamento").trim());
 
                         afastamento.setId(id);
-                        AfastamentoDAO.getInstance().salvar(afastamento);
+                    daoAfastamento.saveOrUpdate(afastamento);
                     }
                 }
             }
@@ -67,10 +69,11 @@ public class ManterAfastamentoController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class)
+                    );
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id").trim());
-                Afastamento afastamento = AfastamentoDAO.getInstance().getAfastamento(id);
+                Afastamento afastamento = daoAfastamento.findById(Afastamento.class, id);
                 request.setAttribute("afastamento", afastamento);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterAfastamento.jsp");

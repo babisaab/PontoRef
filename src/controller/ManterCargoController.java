@@ -1,7 +1,7 @@
 package controller;
 
-import dao.CargoDAO;
-import dao.DepartamentoDAO;
+
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,6 +15,9 @@ import model.Cargo;
 import model.Departamento;
 
 public class ManterCargoController extends HttpServlet {
+    DaoGenerico<Cargo> daoCargo = new DaoGenerico<>();
+    DaoGenerico<Departamento> daoDepartamento = new DaoGenerico<>();
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -62,10 +65,10 @@ public class ManterCargoController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("departamentos", DepartamentoDAO.getInstance().getAllDepartamentos());
+            request.setAttribute("departamentos", daoDepartamento.findAll(Departamento.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id").trim());
-                Cargo cargo = CargoDAO.getInstance().getCargo(id);
+                Cargo cargo = daoCargo.findById(Cargo.class, id);
                 request.setAttribute("cargo", cargo);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterCargo.jsp");
@@ -81,21 +84,20 @@ public class ManterCargoController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdCargo").trim());
-
-                CargoDAO.getInstance().excluir(CargoDAO.getInstance().getCargo(id));
+daoCargo.remove(Cargo.class, id);
             } else {
                 String nome = request.getParameter("txtNomeCargo");
                 String cargaHorariaObrigatoria = request.getParameter("txtCargaHorariaObrigatoria");
                 Long idDepartamento = Long.parseLong(request.getParameter("optDepartamento"));
-                Departamento departamento = DepartamentoDAO.getInstance().getDepartamento(idDepartamento);
+                Departamento departamento = daoDepartamento.findById(Departamento.class, idDepartamento);
                 Cargo cargo = new Cargo(nome, cargaHorariaObrigatoria, departamento);
                 if (operacao.equals("Incluir")) {
-                    CargoDAO.getInstance().salvar(cargo);
+                    daoCargo.saveOrUpdate(cargo);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdCargo").trim());
 
                     cargo.setId(id);
-                    CargoDAO.getInstance().salvar(cargo);
+                    daoCargo.saveOrUpdate(cargo);
                 }
             }
 

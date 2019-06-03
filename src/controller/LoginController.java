@@ -1,8 +1,7 @@
 package controller;
 
-import dao.UsuarioDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,11 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cargo;
 import model.Funcionario;
 import model.Usuario;
 
 public class LoginController extends HttpServlet {
+
+    DaoGenerico<Usuario> daoUsuario = new DaoGenerico<>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
         String senhaVdd = "";
         Funcionario funcionario = new Funcionario();
         try {
-            List<Usuario> usuarios = UsuarioDAO.getInstance().getAllUsuarios();
+            List<Usuario> usuarios = daoUsuario.findAll(Usuario.class);
             for (Usuario usuario : usuarios) {
                 if (usuario.getLogin().equals(login)) {
                     confirma = true;
