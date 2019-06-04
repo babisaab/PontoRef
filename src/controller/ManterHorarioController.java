@@ -1,7 +1,7 @@
 package controller;
 
-import dao.FuncionarioDAO;
-import dao.HorarioDAO;
+
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +16,9 @@ import model.Funcionario;
 import model.Horario;
 
 public class ManterHorarioController extends HttpServlet {
+
+        DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
+        DaoGenerico<Horario> daoHorario = new DaoGenerico<>();
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -36,23 +39,21 @@ public class ManterHorarioController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdHorario").trim());
-
-                HorarioDAO.getInstance().excluir(HorarioDAO.getInstance().getHorario(id));
+daoHorario.remove(Horario.class, id);
             } else {
                 String dia_da_semana = request.getParameter("txtDiaDaSemanaHorario");
                 String hora_inicio = request.getParameter("txtHoraInicioHorario");
                 String hora_fim = request.getParameter("txtHoraFimHorario");
                 Long idFuncionario = Long.parseLong(request.getParameter("optFuncionario"));
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(idFuncionario);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, idFuncionario);
                 Horario horario = new Horario(dia_da_semana, hora_inicio, hora_fim, funcionario);
                 if (operacao.equals("Incluir")) {
-                    HorarioDAO.getInstance().salvar(horario);
-                } else {
+daoHorario.saveOrUpdate(horario);                } else {
                     if (operacao.equals("Editar")) {
                         Long id = Long.parseLong(request.getParameter("txtIdHorario").trim());
 
                         horario.setId(id);
-                        HorarioDAO.getInstance().salvar(horario);
+                        daoHorario.saveOrUpdate(horario); 
                     }
                 }
             }
@@ -68,10 +69,10 @@ public class ManterHorarioController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id").trim());
-                Horario horario = HorarioDAO.getInstance().getHorario(id);
+                Horario horario = daoHorario.findById(Horario.class, id);
                 request.setAttribute("horario", horario);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterHorario.jsp");

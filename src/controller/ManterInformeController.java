@@ -1,7 +1,6 @@
 package controller;
 
-import dao.FuncionarioDAO;
-import dao.InformeDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +15,9 @@ import model.Funcionario;
 import model.Informe;
 
 public class ManterInformeController extends HttpServlet {
+
+    DaoGenerico<Informe> daoInforme = new DaoGenerico<>();
+    DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -35,10 +37,10 @@ public class ManterInformeController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id"));
-                Informe informe = InformeDAO.getInstance().getInforme(id);
+                Informe informe = daoInforme.findById(Informe.class, id);
                 request.setAttribute("informe", informe);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterInforme.jsp");
@@ -55,21 +57,20 @@ public class ManterInformeController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdInforme"));
-
-                InformeDAO.getInstance().excluir(InformeDAO.getInstance().getInforme(id));
+daoInforme.remove(Informe.class, id);
             } else {
                 String dataOcorrido = request.getParameter("txtDataInforme");
                 String motivo = request.getParameter("txtMotivoInforme");
                 Long idFuncionario = Long.parseLong(request.getParameter("optFuncionario"));
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(idFuncionario);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, idFuncionario);
                 Informe informe = new Informe(dataOcorrido, motivo, funcionario);
                 if (operacao.equals("Incluir")) {
-                    InformeDAO.getInstance().salvar(informe);
+                    daoInforme.saveOrUpdate(informe);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdInforme"));
 
                     informe.setId(id);
-                    InformeDAO.getInstance().salvar(informe);
+                    daoInforme.saveOrUpdate(informe);
                 }
             }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaInformeController");
