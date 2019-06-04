@@ -1,7 +1,7 @@
 package controller;
 
-import dao.FuncionarioDAO;
-import dao.UsuarioDAO;
+
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +16,9 @@ import model.Usuario;
 import model.Funcionario;
 
 public class ManterUsuarioController extends HttpServlet {
+    DaoGenerico<Usuario> daoUsuario =new DaoGenerico<>();
+    DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
+    
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -36,21 +39,20 @@ public class ManterUsuarioController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdUsuario").trim());
-
-                UsuarioDAO.getInstance().excluir(UsuarioDAO.getInstance().getUsuario(id));
+daoUsuario.remove(Usuario.class, id);
             } else {
                 String login = request.getParameter("txtLoginUsuario");
                 String senha = request.getParameter("txtSenhaUsuario");
                 Long idFuncionario = Long.parseLong(request.getParameter("optFuncionario"));
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(idFuncionario);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, idFuncionario);
                 Usuario usuario = new Usuario(login, senha, funcionario);
                 if (operacao.equals("Incluir")) {
-                    UsuarioDAO.getInstance().salvar(usuario);
-                } else if (operacao.equals("Editar")) {
+
+                daoUsuario.saveOrUpdate(usuario);} else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdUsuario").trim());
 
                     usuario.setId(id);
-                    UsuarioDAO.getInstance().salvar(usuario);
+                    daoUsuario.saveOrUpdate(usuario);
                 }
             }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaUsuarioController");
@@ -65,10 +67,10 @@ public class ManterUsuarioController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id"));
-                Usuario usuario = UsuarioDAO.getInstance().getUsuario(id);
+                Usuario usuario = daoUsuario.findById(Usuario.class, id);
                 request.setAttribute("usuario", usuario);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterUsuario.jsp");
