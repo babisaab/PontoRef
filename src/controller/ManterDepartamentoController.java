@@ -1,6 +1,6 @@
 package controller;
 
-import dao.DepartamentoDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.Departamento;
 
 public class ManterDepartamentoController extends HttpServlet {
+
+    DaoGenerico<Departamento> daoDepartamento = new DaoGenerico<>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -62,7 +64,7 @@ public class ManterDepartamentoController extends HttpServlet {
             request.setAttribute("operacao", operacao);
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id"));
-                Departamento departamento = DepartamentoDAO.getInstance().getDepartamento(id);
+                Departamento departamento = daoDepartamento.findById(Departamento.class, id);
                 request.setAttribute("departamento", departamento);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterDepartamento.jsp");
@@ -80,19 +82,19 @@ public class ManterDepartamentoController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdDepartamento"));
-
-                DepartamentoDAO.getInstance().excluir(DepartamentoDAO.getInstance().getDepartamento(id));
+                daoDepartamento.remove(Departamento.class, id);
             } else {
                 String nome = request.getParameter("txtNome");
                 String descricao = request.getParameter("txtDescricao");
                 Departamento departamento = new Departamento(nome, descricao);
                 if (operacao.equals("Incluir")) {
-                    DepartamentoDAO.getInstance().salvar(departamento);
+                    daoDepartamento.saveOrUpdate(departamento);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdDepartamento"));
 
                     departamento.setId(id);
-                    DepartamentoDAO.getInstance().salvar(departamento);
+                    daoDepartamento.saveOrUpdate(departamento);
+
                 }
             }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaDepartamentoController");

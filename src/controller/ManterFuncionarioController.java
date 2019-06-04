@@ -1,7 +1,6 @@
 package controller;
 
-import dao.CargoDAO;
-import dao.FuncionarioDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +15,9 @@ import model.Cargo;
 import model.Funcionario;
 
 public class ManterFuncionarioController extends HttpServlet {
+
+    DaoGenerico<Cargo> daoCargo = new DaoGenerico<>();
+    DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -35,10 +37,10 @@ public class ManterFuncionarioController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("cargos", CargoDAO.getInstance().getAllCargos());
+            request.setAttribute("cargos", daoCargo.findAll(Cargo.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id").trim());
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(id);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, id);
                 request.setAttribute("funcionario", funcionario);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterFuncionario.jsp");
@@ -56,8 +58,7 @@ public class ManterFuncionarioController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdFuncionario"));
-
-                FuncionarioDAO.getInstance().excluir(FuncionarioDAO.getInstance().getFuncionario(id));
+                daoFuncionario.remove(Funcionario.class, id);
             } else {
                 String nomeCompleto = request.getParameter("txtNomeCompleto");
                 String cpf = request.getParameter("txtCPF");
@@ -76,16 +77,17 @@ public class ManterFuncionarioController extends HttpServlet {
                 String dataAdmissao = request.getParameter("txtAdmissao");
                 String email = request.getParameter("txtEmail");
                 Long idCargo = Long.parseLong(request.getParameter("optCargo"));
-                Cargo cargo = CargoDAO.getInstance().getCargo(idCargo);
-                 
+                Cargo cargo = daoCargo.findById(Cargo.class, idCargo);
+
                 Funcionario funcionario = new Funcionario(nomeCompleto, cpf, rg, sexo, dataNascimento, cep, logradouro, numero, complemento, bairro, cidade, uf, matricula, curso, dataAdmissao, email, cargo);
                 if (operacao.equals("Incluir")) {
-                    FuncionarioDAO.getInstance().salvar(funcionario);
+                    daoFuncionario.saveOrUpdate(funcionario);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdFuncionario"));
 
                     funcionario.setId(id);
-                    FuncionarioDAO.getInstance().salvar(funcionario);
+                    daoFuncionario.saveOrUpdate(funcionario);
+                } else if (operacao.equals("Editar")) {
                 }
             }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaFuncionarioController");

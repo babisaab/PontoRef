@@ -1,7 +1,6 @@
 package controller;
 
-import dao.CartaoDAO;
-import dao.FuncionarioDAO;
+import dao.DaoGenerico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +15,9 @@ import model.Cartao;
 import model.Funcionario;
 
 public class ManterCartaoController extends HttpServlet {
+
+    DaoGenerico<Cartao> daoCartao = new DaoGenerico<>();
+    DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -63,10 +65,10 @@ public class ManterCartaoController extends HttpServlet {
         try {
             String operacao = request.getParameter("operacao");
             request.setAttribute("operacao", operacao);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
             if (!operacao.equals("Incluir")) {
                 Long id = Long.parseLong(request.getParameter("id"));
-                Cartao cartao = CartaoDAO.getInstance().getCartao(id);
+                Cartao cartao = daoCartao.findById(Cartao.class, id);
                 request.setAttribute("cartao", cartao);
             }
             RequestDispatcher view = request.getRequestDispatcher("/manterCartao.jsp");
@@ -83,23 +85,22 @@ public class ManterCartaoController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdCartao"));
-
-                CartaoDAO.getInstance().excluir(CartaoDAO.getInstance().getCartao(id));
+                daoCartao.remove(Cartao.class, id);
             } else {
                 String tipo = request.getParameter("optTipoCartao");
                 String cor = request.getParameter("optCorCartao");
                 String motivo = request.getParameter("txtMotivoCartao");
                 String data = request.getParameter("txtDataCartao");
                 Long idFuncionario = Long.parseLong(request.getParameter("optFuncionario"));
-                Funcionario funcionario = FuncionarioDAO.getInstance().getFuncionario(idFuncionario);
+                Funcionario funcionario = daoFuncionario.findById(Funcionario.class, idFuncionario);
                 Cartao cartao = new Cartao(tipo, cor, motivo, data, funcionario);
                 if (operacao.equals("Incluir")) {
-                    CartaoDAO.getInstance().salvar(cartao);
+                    daoCartao.saveOrUpdate(cartao);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdCartao"));
 
                     cartao.setId(id);
-                    CartaoDAO.getInstance().salvar(cartao);
+                    daoCartao.saveOrUpdate(cartao);
                 }
             }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaCartaoController");
