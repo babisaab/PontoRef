@@ -1,8 +1,8 @@
 package controller;
 
-import dao.CartaoDAO;
-import dao.FuncionarioDAO;
 
+
+import dao.DaoGenerico;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Cargo;
 import model.Cartao;
+import model.Funcionario;
 
 public class PesquisaCartaoController extends HttpServlet {
 
+    DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
+    DaoGenerico<Cartao> daoCartao = new DaoGenerico<>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String acao = request.getParameter("acao");
       
@@ -22,7 +26,7 @@ public class PesquisaCartaoController extends HttpServlet {
             Long id = Long.parseLong(request.getParameter("id"));
                List<Cartao> todosAfastamentos = new ArrayList<Cartao>();
             List<Cartao> afastamentos = new ArrayList<Cartao>();
-            todosAfastamentos = CartaoDAO.getInstance().getAllCartoes();
+            todosAfastamentos = daoCartao.findAll(Cartao.class);
             for (Cartao afastamento : todosAfastamentos) {
                 if (afastamento.getfuncionario().getId() == id) {
                     afastamentos.add(afastamento);
@@ -30,10 +34,10 @@ public class PesquisaCartaoController extends HttpServlet {
             }
             request.setAttribute("acao", acao);
             request.setAttribute("cartoes",afastamentos);
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("funcionarios",daoFuncionario.findAll(Funcionario.class));
         } else {
-            request.setAttribute("cartoes", CartaoDAO.getInstance().getAllCartoes());
-            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().getAllFuncionarios());
+            request.setAttribute("cartoes", daoCartao.findAll(Cartao.class));
+            request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
         }
         RequestDispatcher view = request.getRequestDispatcher("/pesquisaCartao.jsp");
         view.forward(request, response);
