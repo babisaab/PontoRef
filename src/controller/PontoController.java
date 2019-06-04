@@ -1,7 +1,7 @@
 package controller;
 
+import dao.DaoGenerico;
 import utils.NetworkManager;
-import dao.HorarioDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +16,7 @@ import model.Horario;
 
 public class PontoController extends HttpServlet {
 
+    DaoGenerico<Horario> daoHorario = new DaoGenerico<>();
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         String source = NetworkManager.myIP();
         String remote = request.getRemoteAddr();
@@ -25,7 +26,7 @@ public class PontoController extends HttpServlet {
         if (sameNetwork) {
             String diaAtual = Instant.now().toString();
             request.setAttribute("dia", diaAtual);
-            List<Horario> horarios = HorarioDAO.getInstance().getAllHorarios();
+            List<Horario> horarios = daoHorario.findAll(Horario.class);
             request.getRequestDispatcher("/menu.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("/errorLocalizacao.jsp").forward(request, response);
