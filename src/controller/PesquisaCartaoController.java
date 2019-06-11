@@ -24,16 +24,16 @@ public class PesquisaCartaoController extends HttpServlet {
       
         if (acao.equals("Only")) {
             Long id = Long.parseLong(request.getParameter("id"));
-               List<Cartao> todosAfastamentos = new ArrayList<Cartao>();
-            List<Cartao> afastamentos = new ArrayList<Cartao>();
-            todosAfastamentos = daoCartao.findAll(Cartao.class);
-            for (Cartao afastamento : todosAfastamentos) {
-                if (afastamento.getfuncionario().getId() == id) {
-                    afastamentos.add(afastamento);
+               List<Cartao> todosCartoes = new ArrayList<Cartao>();
+            List<Cartao> cartoes = new ArrayList<Cartao>();
+            todosCartoes = daoCartao.findAll(Cartao.class);
+            for (Cartao cartao : todosCartoes) {
+                if (cartao.getfuncionario().getId() == id) {
+                    cartoes.add(cartao);
                 }
             }
             request.setAttribute("acao", acao);
-            request.setAttribute("cartoes",afastamentos);
+            request.setAttribute("cartoes",cartoes);
             request.setAttribute("funcionarios",daoFuncionario.findAll(Funcionario.class));
         } else {
             request.setAttribute("cartoes", daoCartao.findAll(Cartao.class));

@@ -27,17 +27,17 @@ public class PesquisaInformeController extends HttpServlet {
             
              Long id = Long.parseLong(request.getParameter("id"));
             request.setAttribute("acao", acao);
-            List<Informe> todosAfastamentos = new ArrayList<Informe>();
-            List<Informe> afastamentos = new ArrayList<Informe>();
-            todosAfastamentos = daoInforme.findAll(Informe.class);
-            for (Informe afastamento : todosAfastamentos) {
-                if (afastamento.getFuncionario().getId() == id) {
-                    afastamentos.add(afastamento);
+            List<Informe> todosInformes = new ArrayList<Informe>();
+            List<Informe> informes = new ArrayList<Informe>();
+            todosInformes = daoInforme.findAll(Informe.class);
+            for (Informe informe : todosInformes) {
+                if (informe.getFuncionario().getId() == id) {
+                    informes.add(informe);
                 }
             }
             
             request.setAttribute("acao", acao);
-            request.setAttribute("informes", afastamentos);
+            request.setAttribute("informes", informes);
             request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
         }else{
             request.setAttribute("informes", daoInforme.findAll(Informe.class));
