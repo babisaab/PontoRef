@@ -4,10 +4,10 @@
         <servlet-name>PesquisaAfastamentoController</servlet-name>
         <servlet-class>controller.PesquisaAfastamentoController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>PesquisaCargoController</servlet-name>
-        <servlet-class>controller.PesquisaCargoController</servlet-class>
-    </servlet>
+<!--    <servlet>
+        <servlet-name>CargoController</servlet-name>
+        <servlet-class>controller.CargoController</servlet-class>
+    </servlet>-->
     <servlet>
         <servlet-name>PesquisaDepartamentoController</servlet-name>
         <servlet-class>controller.PesquisaDepartamentoController</servlet-class>
@@ -41,8 +41,8 @@
         <servlet-class>controller.PesquisaUsuarioController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManterCargoController</servlet-name>
-        <servlet-class>controller.ManterCargoController</servlet-class>
+        <servlet-name>CargoController</servlet-name>
+        <servlet-class>controller.CargoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManterAfastamentoController</servlet-name>
@@ -140,10 +140,10 @@
         <servlet-name>PesquisaAfastamentoController</servlet-name>
         <url-pattern>/PesquisaAfastamentoController</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PesquisaCargoController</servlet-name>
-        <url-pattern>/PesquisaCargoController</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>
+        <servlet-name>CargoController</servlet-name>
+        <url-pattern>/CargoController</url-pattern>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>PesquisaDepartamentoController</servlet-name>
         <url-pattern>/PesquisaDepartamentoController</url-pattern>
@@ -177,8 +177,8 @@
         <url-pattern>/PesquisaUsuarioController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManterCargoController</servlet-name>
-        <url-pattern>/ManterCargoController</url-pattern>
+        <servlet-name>CargoController</servlet-name>
+        <url-pattern>/CargoController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManterAfastamentoController</servlet-name>

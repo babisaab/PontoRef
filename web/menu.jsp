@@ -20,7 +20,7 @@
             <ul>
                 <title>${f.nomeCompleto} Funcionario</title>
 
-                <li><a href="PesquisaCargoController"><span title="Cargo">Cargo</span></a></li>
+                <li><a href="CargoController?acao=All"><span title="Cargo">Cargo</span></a></li>
                 <li><a href="PesquisaCartaoController?acao=All"><span title="Cartão">Cartão</span></a></li>
                 <li><a href="PesquisaAfastamentoController?acao=All"><span title="Afastamento">Afastamento</span></a></li>
                 <li><a href="PesquisaContatoController"><span title="Contato">Contato</span></a></li>

@@ -2,61 +2,43 @@ package controller;
 
 import dao.DaoGenerico;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Cargo;
 import model.Departamento;
 
-public class ManterCargoController extends HttpServlet {
+public class CargoController extends HttpServlet {
 
     DaoGenerico<Cargo> daoCargo = new DaoGenerico<>();
     DaoGenerico<Departamento> daoDepartamento = new DaoGenerico<>();
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
         String acao = request.getParameter("acao");
         if (acao.equals("confirmarOperacao")) {
             confirmarOperacao(request, response);
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
+            } else {
+                if (acao.equals("getOnly")) {
+                    prepararOperacao(request, response);
+                } else {
+
+                    request.setAttribute("cargos", daoCargo.findAll(Cargo.class));
+                    RequestDispatcher view = request.getRequestDispatcher("/pesquisaCargo.jsp");
+                    view.forward(request, response);
+
+                }
             }
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
     public void prepararOperacao(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +55,7 @@ public class ManterCargoController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/manterCargo.jsp");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -100,10 +82,42 @@ public class ManterCargoController extends HttpServlet {
                 }
             }
 
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaCargoController");
+            RequestDispatcher view = request.getRequestDispatcher("CargoController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CargoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+
 }

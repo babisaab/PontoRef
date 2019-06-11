@@ -27,17 +27,17 @@ public class PesquisaHorarioController extends HttpServlet {
 
             Long id = Long.parseLong(request.getParameter("id"));
             request.setAttribute("acao", acao);
-            List<Horario> todosAfastamentos = new ArrayList<Horario>();
-            List<Horario> afastamentos = new ArrayList<Horario>();
-            todosAfastamentos = daoHorario.findAll(Horario.class);
-            for (Horario afastamento : todosAfastamentos) {
-                if (afastamento.getFuncionario().getId() == id) {
-                    afastamentos.add(afastamento);
+            List<Horario> todosHorarios = new ArrayList<Horario>();
+            List<Horario> horarios = new ArrayList<Horario>();
+            todosHorarios = daoHorario.findAll(Horario.class);
+            for (Horario horario : todosHorarios) {
+                if (horario.getFuncionario().getId() == id) {
+                    horarios.add(horario);
                 }
             }
 
             request.setAttribute("acao", acao);
-            request.setAttribute("horarios", afastamentos);
+            request.setAttribute("horarios", horarios);
             request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
         } else {
             request.setAttribute("horarios", daoHorario.findAll(Horario.class));

@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Cargo</h1>
 
-        <form action="ManterCargoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCargo">
+        <form action="CargoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCargo">
             <table>
 
                 <tr>
@@ -37,7 +37,7 @@
                         <td><input type="text" name="txtIdCargo" value="${cargo.id}" hidden="" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>></td>
             </table>
         </form>
-        <a href="PesquisaCargoController">
+        <a href="CargoController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

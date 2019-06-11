@@ -20,13 +20,13 @@
                     <td><c:out value="${cargo.nome}" /></td>
                     <td><c:out value="${cargo.cargaHorariaObrigatoria}" /></td>
                     <td><a href=
-                           "ManterCargoController?acao=prepararOperacao&operacao=Editar&id=${cargo.id}">Editar</a></td>
+                           "CargoController?acao=prepararOperacao&operacao=Editar&id=${cargo.id}">Editar</a></td>
                     <td><a href=
-                           "ManterCargoController?acao=prepararOperacao&operacao=Excluir&id=${cargo.id}">Excluir</a></td>
+                           "CargoController?acao=prepararOperacao&operacao=Excluir&id=${cargo.id}">Excluir</a></td>
                 </tr>
             </c:forEach>
         </table>
-        <form action="ManterCargoController?acao=prepararOperacao&operacao=Incluir" method="post">
+        <form action="CargoController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
         <a href="menu.jsp">
