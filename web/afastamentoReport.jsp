@@ -14,7 +14,7 @@
     <body>
 
         <h>Relatório de Afastamentos por funcionário</h>
-        <form action="RelatorioAfastamentoParamController" method="post">
+        <form action="RelatorioGenericController?acao=Afastamento.jsp" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>

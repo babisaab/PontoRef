@@ -12,8 +12,8 @@
         <table border="1">
             <tr>
                 <th>Login</th>
-                <th>Funcionário</th>
-                <th colspan="2">Ações</th>
+                <th>FuncionÃ¡rio</th>
+                <th colspan="2">AÃ§Ãµes</th>
             </tr>
             <c:forEach items="${usuarios}" var="usuario">
                 <tr>

@@ -13,7 +13,7 @@
     </head>
     <body>
         <h>Relatório de Horários por funcionário</h>
-        <form action="RelatorioHorarioParamController" method="post">
+        <form action="RelatorioGenericController?acao=HorarioParam.jasper" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>

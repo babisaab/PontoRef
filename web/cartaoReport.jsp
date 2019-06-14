@@ -13,7 +13,7 @@
     </head>
     <body>
         <h>Relatório de Cartões por funcionário</h>
-        <form action="RelatorioCartaoParamController" method="post">
+        <form action="RelatorioGenericController?acao=CartaoFunc.jasper" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>

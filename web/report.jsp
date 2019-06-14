@@ -14,7 +14,7 @@
     <body>
 
         <h>Relatório de Funcionários</h>
-        <form action="RelatorioFuncParamController" method="post">
+        <form action="RelatorioGenericController?acao=Funcionarios.jasper" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/>
             <input type="submit"/>
