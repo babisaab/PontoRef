@@ -21,23 +21,23 @@
                 <title>${f.nomeCompleto} Funcionario</title>
 
                 <li><a href="CargoController?acao=All"><span title="Cargo">Cargo</span></a></li>
-                <li><a href="PesquisaCartaoController?acao=All"><span title="Cartão">Cartão</span></a></li>
-                <li><a href="PesquisaAfastamentoController?acao=All"><span title="Afastamento">Afastamento</span></a></li>
-                <li><a href="PesquisaContatoController"><span title="Contato">Contato</span></a></li>
-                <li><a href="PesquisaDepartamentoController"><span title="Departamento">Departamento</span></a></li>
-                <li><a href="PesquisaFuncionarioController"><span title="Funcionario">Funcionário</span></a></li>
-                <li><a href="PesquisaHorarioController?acao=All"><span title="Horario">Horário</span></a></li>
-                <li><a href="PesquisaInformeController?acao=All"><span title="Informe">Informe</span></a></li>
-                <li><a href="PesquisaUsuarioController"><span title="Usuario">Usuário</span></a></li>
+                <li><a href="CartaoController?acao=All"><span title="Cartão">Cartão</span></a></li>
+                <li><a href="AfastamentoController?acao=All"><span title="Afastamento">Afastamento</span></a></li>
+                <li><a href="ContatoController?acao=All"><span title="Contato">Contato</span></a></li>
+                <li><a href="DepartamentoController?acao=All"><span title="Departamento">Departamento</span></a></li>
+                <li><a href="FuncionarioController?acao=All"><span title="Funcionario">Funcionário</span></a></li>
+                <li><a href="HorarioController?acao=All"><span title="Horario">Horário</span></a></li>
+                <li><a href="InformeController?acao=All"><span title="Informe">Informe</span></a></li>
+                <li><a href="UsuarioController?acao=All"><span title="Usuario">Usuário</span></a></li>
 
-                <li><a href="report.jsp"><span title="Relatorio">Relatórios</span></a></li>
+                <li><a href="relatorioReport.jsp"><span title="Relatorio">Relatórios</span></a></li>
             </ul>
 
             <ul>
-                <li><a href="PesquisaAfastamentoController?acao=Only&id=${f.id}"><span title="Seus Afastamentos">Seus Afastamentos</span></a></li>
-                <li><a href="PesquisaCartaoController?acao=Only&id=${f.id}"><span title="Seus Cartões">Seus Cartões</span></a></li>
-                <li><a href="PesquisaHorarioController?acao=Only&id=${f.id}"><span title="Seus Horários">Seus Horarios</span></a></li>
-                <li><a href="PesquisaInformeController?acao=Only&id=${f.id}"><span title="Seus Informes">Seus Informes</span></a></li>
+                <li><a href="AfastamentoController?acao=Only&id=${f.id}"><span title="Seus Afastamentos">Seus Afastamentos</span></a></li>
+                <li><a href="CartaoController?acao=Only&id=${f.id}"><span title="Seus Cartões">Seus Cartões</span></a></li>
+                <li><a href="HorarioController?acao=Only&id=${f.id}"><span title="Seus Horários">Seus Horarios</span></a></li>
+                <li><a href="InformeController?acao=Only&id=${f.id}"><span title="Seus Informes">Seus Informes</span></a></li>
                 <!------ <li><a href="PontoController?acao=Entrada&id=${idFuncionario}"><span title="Marcar Entrada">Marcar Entrada</span></a></li> ---------->
                <!------ <li><a href="PontoController?acao=Saida&id=${idFuncionario}"><span title="Marcar Saida">Marcar Saida</span></a></li> ---------->
             </ul>

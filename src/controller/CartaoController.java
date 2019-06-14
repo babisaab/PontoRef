@@ -2,8 +2,9 @@ package controller;
 
 import dao.DaoGenerico;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cartao;
 import model.Funcionario;
 
-public class ManterCartaoController extends HttpServlet {
+public class CartaoController extends HttpServlet {
 
     DaoGenerico<Cartao> daoCartao = new DaoGenerico<>();
     DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
@@ -27,37 +28,28 @@ public class ManterCartaoController extends HttpServlet {
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
+            } else {
+                if (acao.equals("Only")) {
+                    Long id = Long.parseLong(request.getParameter("id"));
+                    List<Cartao> todosCartoes = new ArrayList<Cartao>();
+                    List<Cartao> cartoes = new ArrayList<Cartao>();
+                    todosCartoes = daoCartao.findAll(Cartao.class);
+                    for (Cartao cartao : todosCartoes) {
+                        if (cartao.getfuncionario().getId() == id) {
+                            cartoes.add(cartao);
+                        }
+                    }
+                    request.setAttribute("acao", acao);
+                    request.setAttribute("cartoes", cartoes);
+                    request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
+                } else {
+                    request.setAttribute("cartoes", daoCartao.findAll(Cartao.class));
+                    request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
+                }
+                RequestDispatcher view = request.getRequestDispatcher("/pesquisaCartao.jsp");
+                view.forward(request, response);
             }
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCartaoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterCartaoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCartaoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterCartaoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
     public void prepararOperacao(HttpServletRequest request, HttpServletResponse response)
@@ -74,7 +66,7 @@ public class ManterCartaoController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/manterCartao.jsp");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,10 +95,40 @@ public class ManterCartaoController extends HttpServlet {
                     daoCartao.saveOrUpdate(cartao);
                 }
             }
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaCartaoController");
+            RequestDispatcher view = request.getRequestDispatcher("CartaoController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CartaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+
 }

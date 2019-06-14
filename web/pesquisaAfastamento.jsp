@@ -29,15 +29,15 @@
                     <c:if test="${acao != 'Only'}">
                         <td><c:forEach items="${funcionarios}" var="funcionario"><c:if test="${afastamento.funcionario.id == funcionario.id}"><c:out value="${funcionario.nomeCompleto}" /></c:if></c:forEach></td>
                         <td><a href=
-                           "ManterAfastamentoController?acao=prepararOperacao&operacao=Editar&id=${afastamento.id}">Editar</a></td>
+                           "AfastamentoController?acao=prepararOperacao&operacao=Editar&id=${afastamento.id}">Editar</a></td>
                         <td><a href=
-                           "ManterAfastamentoController?acao=prepararOperacao&operacao=Excluir&id=${afastamento.id}">Excluir</a></td>
+                           "AfastamentoController?acao=prepararOperacao&operacao=Excluir&id=${afastamento.id}">Excluir</a></td>
                     </c:if>
                 </tr>
             </c:forEach>
         </table>
         <c:if test="${acao != 'Only'}">
-            <form action="ManterAfastamentoController?acao=prepararOperacao&operacao=Incluir" method="post">
+            <form action="AfastamentoController?acao=prepararOperacao&operacao=Incluir" method="post">
                 <input type="submit" name="btnIncluir" value="Incluir">
             </form>
         </c:if>

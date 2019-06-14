@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Informe</h1>
 
-        <form action="ManterInformeController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterInforme">
+        <form action="InformeController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterInforme">
             <table>
 
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaInformeController">
+        <a href="InformeController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

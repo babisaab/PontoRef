@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Cartão</h1>
 
-        <form action="ManterCartaoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCartao">
+        <form action="CartaoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCartao">
             <table>
 
                 <tr> 
@@ -58,7 +58,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaCartaoController">
+        <a href="CartaoController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

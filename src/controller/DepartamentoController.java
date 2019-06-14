@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Departamento;
 
-public class ManterDepartamentoController extends HttpServlet {
+public class DepartamentoController extends HttpServlet {
 
     DaoGenerico<Departamento> daoDepartamento = new DaoGenerico<>();
 
@@ -24,37 +24,16 @@ public class ManterDepartamentoController extends HttpServlet {
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
+            } else {
+                if (acao.equals("getOnly")) {
+                    prepararOperacao(request, response);
+                } else {
+                    request.setAttribute("departamentos", daoDepartamento.findAll(Departamento.class));
+                    RequestDispatcher view = request.getRequestDispatcher("/pesquisaDepartamento.jsp");
+                    view.forward(request, response);
+                }
             }
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
     public void prepararOperacao(HttpServletRequest request, HttpServletResponse response)
@@ -71,7 +50,7 @@ public class ManterDepartamentoController extends HttpServlet {
             view.forward(request, response);
         } catch (ServletException e) {
         } catch (IOException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,10 +76,40 @@ public class ManterDepartamentoController extends HttpServlet {
 
                 }
             }
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaDepartamentoController");
+            RequestDispatcher view = request.getRequestDispatcher("DepartamentoController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterDepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+
 }

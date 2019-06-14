@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Usuario</h1>
 
-        <form action="ManterUsuarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterUsuario">
+        <form action="UsuarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterUsuario">
             <table>
       
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaUsuarioController">
+        <a href="UsuarioController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

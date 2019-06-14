@@ -2,7 +2,6 @@ package controller;
 
 import dao.DaoGenerico;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cargo;
 import model.Funcionario;
 
-public class ManterFuncionarioController extends HttpServlet {
+public class FuncionarioController extends HttpServlet {
 
     DaoGenerico<Cargo> daoCargo = new DaoGenerico<>();
     DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
@@ -27,7 +26,14 @@ public class ManterFuncionarioController extends HttpServlet {
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
-
+            } else {
+                if (acao.equals("getOnly")) {
+                    prepararOperacao(request, response);
+                } else {
+                    request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
+                    RequestDispatcher view = request.getRequestDispatcher("/pesquisaFuncionario.jsp");
+                    view.forward(request, response);
+                }
             }
         }
     }
@@ -46,7 +52,7 @@ public class ManterFuncionarioController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/manterFuncionario.jsp");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterAfastamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -90,10 +96,10 @@ public class ManterFuncionarioController extends HttpServlet {
                 } else if (operacao.equals("Editar")) {
                 }
             }
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaFuncionarioController");
+            RequestDispatcher view = request.getRequestDispatcher("FuncionarioController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,10 +109,10 @@ public class ManterFuncionarioController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ManterFuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -116,10 +122,10 @@ public class ManterFuncionarioController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ManterFuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

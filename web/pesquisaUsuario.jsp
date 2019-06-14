@@ -20,13 +20,13 @@
                     <td><c:out value="${usuario.login}" /></td>
                     <td><c:forEach items="${funcionarios}" var="funcionario"><c:if test="${usuario.funcionario.id == funcionario.id}"><c:out value="${funcionario.nomeCompleto}" /></c:if></c:forEach></td>
                     <td><a href=
-                           "ManterUsuarioController?acao=prepararOperacao&operacao=Editar&id=${usuario.id}">Editar</a></td>
+                           "UsuarioController?acao=prepararOperacao&operacao=Editar&id=${usuario.id}">Editar</a></td>
                     <td><a href=
-                           "ManterUsuarioController?acao=prepararOperacao&operacao=Excluir&id=${usuario.id}">Excluir</a></td>
+                           "UsuarioController?acao=prepararOperacao&operacao=Excluir&id=${usuario.id}">Excluir</a></td>
                 </tr>
             </c:forEach>
         </table>
-        <form action="ManterUsuarioController?acao=prepararOperacao&operacao=Incluir" method="post">
+        <form action="UsuarioController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
         <a href="menu.jsp">

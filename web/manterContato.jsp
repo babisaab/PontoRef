@@ -9,7 +9,7 @@
     <body>
         <h1>${operacao} Contato</h1>
 
-        <form action="ManterContatoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterContato">
+        <form action="ContatoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterContato">
             <table>
 
                 <tr>
@@ -33,7 +33,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaContatoController">
+        <a href="ContatoController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

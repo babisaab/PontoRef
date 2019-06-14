@@ -20,13 +20,13 @@
                     <td><c:out value="${contato.telefone}" /></td>
                     <td><c:forEach items="${funcionarios}" var="funcionario"><c:if test="${contato.funcionario.id == funcionario.id}"><c:out value="${funcionario.nomeCompleto}" /></c:if></c:forEach></td>
                     <td><a href=
-                           "ManterContatoController?acao=prepararOperacao&operacao=Editar&id=${contato.id}">Editar</a></td>
+                           "ContatoController?acao=prepararOperacao&operacao=Editar&id=${contato.id}">Editar</a></td>
                     <td><a href=
-                           "ManterContatoController?acao=prepararOperacao&operacao=Excluir&id=${contato.id}">Excluir</a></td>
+                           "ContatoController?acao=prepararOperacao&operacao=Excluir&id=${contato.id}">Excluir</a></td>
                 </tr>
             </c:forEach>
         </table>
-        <form action="ManterContatoController?acao=prepararOperacao&operacao=Incluir" method="post">
+        <form action="ContatoController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
         <a href="menu.jsp">

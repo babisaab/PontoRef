@@ -28,13 +28,13 @@
                     <td><c:out value="${funcionario.dataAdmissao}" /></td>
                     <td><c:out value="${funcionario.email}" /></td>
                     <td><a href=
-                           "ManterFuncionarioController?acao=prepararOperacao&operacao=Editar&id=${funcionario.id}">Editar</a></td>
+                           "FuncionarioController?acao=prepararOperacao&operacao=Editar&id=${funcionario.id}">Editar</a></td>
                     <td><a href=
-                           "ManterFuncionarioController?acao=prepararOperacao&operacao=Excluir&id=${funcionario.id}">Excluir</a></td>
+                           "FuncionarioController?acao=prepararOperacao&operacao=Excluir&id=${funcionario.id}">Excluir</a></td>
                 </tr>
             </c:forEach>
         </table>
-        <form action="ManterFuncionarioController?acao=prepararOperacao&operacao=Incluir" method="post">
+        <form action="FuncionarioController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
         <a href="menu.jsp">

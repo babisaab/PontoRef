@@ -2,7 +2,6 @@ package controller;
 
 import dao.DaoGenerico;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.Contato;
 import model.Funcionario;
 
-public class ManterContatoController extends HttpServlet {
-    
+public class ContatoController extends HttpServlet {
+
     DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
     DaoGenerico<Contato> daoContato = new DaoGenerico<>();
-    
+
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         String acao = request.getParameter("acao");
@@ -27,11 +26,21 @@ public class ManterContatoController extends HttpServlet {
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
-                
+            } else {
+                if (acao.equals("getOnly)")) {
+                    prepararOperacao(request, response);
+                } else {
+
+                    request.setAttribute("contatos", daoContato.findAll(Contato.class));
+                    request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
+                    RequestDispatcher view = request.getRequestDispatcher("/pesquisaContato.jsp");
+                    view.forward(request, response);
+
+                }
             }
         }
     }
-    
+
     public void prepararOperacao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, ClassNotFoundException {
         try {
@@ -46,14 +55,14 @@ public class ManterContatoController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/manterContato.jsp");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterAfastamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void confirmarOperacao(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException {
         try {
             String operacao = request.getParameter("operacao");
-            
+
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdContato"));
                 daoContato.remove(Contato.class, id);
@@ -66,47 +75,47 @@ public class ManterContatoController extends HttpServlet {
                     daoContato.saveOrUpdate(contato);
                 } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdContato"));
-                    
+
                     contato.setId(id);
                     daoContato.saveOrUpdate(contato);
                 }
             }
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaContatoController");
+            RequestDispatcher view = request.getRequestDispatcher("ContatoController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
-            
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (SQLException ex) {
-            Logger.getLogger(ManterContatoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterCargoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ManterContatoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }
-    
+
 }

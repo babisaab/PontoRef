@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Afastamento</h1>
 
-        <form action="ManterAfastamentoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterAfastamento">
+        <form action="AfastamentoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterAfastamento">
             <table>
                 <tr>
                     <td>Data de Início:</td> 
@@ -45,7 +45,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaAfastamentoController">
+        <a href="AfastamentoController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Horario</h1>
 
-        <form action="ManterHorarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterHorario">
+        <form action="HorarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterHorario">
             <table>
            
                 <tr>
@@ -42,7 +42,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaHorarioController">
+        <a href="HorarioController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

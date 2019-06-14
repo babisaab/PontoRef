@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Funcionario</h1>
 
-        <form action="ManterFuncionarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterFuncionario">
+        <form action="FuncionarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterFuncionario">
             <table>
 
                 <tr>
@@ -106,7 +106,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaFuncionarioController">
+        <a href="FuncionarioController?acao=All">
             <button>Voltar</button>
         </a>
     </body>

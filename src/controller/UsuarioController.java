@@ -1,9 +1,7 @@
 package controller;
 
-
 import dao.DaoGenerico;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import model.Usuario;
 import model.Funcionario;
 
-public class ManterUsuarioController extends HttpServlet {
-    DaoGenerico<Usuario> daoUsuario =new DaoGenerico<>();
+public class UsuarioController extends HttpServlet {
+
+    DaoGenerico<Usuario> daoUsuario = new DaoGenerico<>();
     DaoGenerico<Funcionario> daoFuncionario = new DaoGenerico<>();
-    
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
@@ -28,6 +26,14 @@ public class ManterUsuarioController extends HttpServlet {
         } else {
             if (acao.equals("prepararOperacao")) {
                 prepararOperacao(request, response);
+            } else {
+                prepararOperacao(request, response);
+            }
+            if (acao.equals("getOnly")) {
+                request.setAttribute("usuarios", daoUsuario.findAll(Usuario.class));
+                request.setAttribute("funcionarios", daoFuncionario.findAll(Funcionario.class));
+                RequestDispatcher view = request.getRequestDispatcher("/pesquisaUsuario.jsp");
+                view.forward(request, response);
             }
         }
     }
@@ -39,7 +45,7 @@ public class ManterUsuarioController extends HttpServlet {
 
             if (operacao.equals("Excluir")) {
                 Long id = Long.parseLong(request.getParameter("txtIdUsuario").trim());
-daoUsuario.remove(Usuario.class, id);
+                daoUsuario.remove(Usuario.class, id);
             } else {
                 String login = request.getParameter("txtLoginUsuario");
                 String senha = request.getParameter("txtSenhaUsuario");
@@ -48,17 +54,18 @@ daoUsuario.remove(Usuario.class, id);
                 Usuario usuario = new Usuario(login, senha, funcionario);
                 if (operacao.equals("Incluir")) {
 
-                daoUsuario.saveOrUpdate(usuario);} else if (operacao.equals("Editar")) {
+                    daoUsuario.saveOrUpdate(usuario);
+                } else if (operacao.equals("Editar")) {
                     Long id = Long.parseLong(request.getParameter("txtIdUsuario").trim());
 
                     usuario.setId(id);
                     daoUsuario.saveOrUpdate(usuario);
                 }
             }
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaUsuarioController");
+            RequestDispatcher view = request.getRequestDispatcher("UsuarioController?acao=All");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterAfastamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -76,7 +83,7 @@ daoUsuario.remove(Usuario.class, id);
             RequestDispatcher view = request.getRequestDispatcher("/manterUsuario.jsp");
             view.forward(request, response);
         } catch (IOException ex) {
-            Logger.getLogger(ManterUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -87,9 +94,9 @@ daoUsuario.remove(Usuario.class, id);
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ManterUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,9 +106,9 @@ daoUsuario.remove(Usuario.class, id);
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ManterUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ManterUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

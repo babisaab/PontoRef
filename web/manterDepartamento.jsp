@@ -10,7 +10,7 @@
     <body>
         <h1>${operacao} Departamento</h1>
 
-        <form action="ManterDepartamentoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterDepartamento">
+        <form action="DepartamentoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterDepartamento">
             <table>
 
                 <tr>
@@ -28,7 +28,7 @@
                 </tr>
             </table>
         </form>
-        <a href="PesquisaDepartamentoController">
+        <a href="DepartamentoController?acao=All">
             <button>Voltar</button>
         </a>
     </body>
