@@ -45,6 +45,10 @@
         <servlet-name>PontoController</servlet-name>
         <servlet-class>controller.PontoController</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>RelatorioGenericController</servlet-name>
+        <servlet-class>relatorio.RelatorioGenericController</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>RelatorioAfastFuncController</servlet-name>
         <servlet-class>relatorio.RelatorioAfastFuncController</servlet-class>
@@ -136,6 +140,10 @@
     <servlet-mapping>
         <servlet-name>PontoController</servlet-name>
         <url-pattern>/PontoController</url-pattern>
+    </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>RelatorioGenericController</servlet-name>
+        <url-pattern>/RelatorioGenericController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RelatorioAfastFuncController</servlet-name>

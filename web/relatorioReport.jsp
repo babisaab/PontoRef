@@ -16,19 +16,19 @@
 <body>
 
     <ul>
-        <li><a href="RelatorioGenericController?acao=Afastamentos.jasper"><span title="Relatorio">Relatório de
+        <li><a href="RelatorioGenericController?acao=Afastamentos"><span title="Relatorio">Relatório de
                     Afastamentos</span></a></li>
-        <li><a href="RelatorioGenericController?acao=Cargos.jasper"><span title="Relatorio">Relatório de Cargos</span></a>
+        <li><a href="RelatorioGenericController?acao=Cargos"><span title="Relatorio">Relatório de Cargos</span></a>
         </li>
-        <li><a href="RelatorioGenericController?acao=Departamentos.jasper"><span title="Relatorio">Relatório de
+        <li><a href="RelatorioGenericController?acao=Departamentos"><span title="Relatorio">Relatório de
                     Departamentos</span></a></li>
-        <li><a href="RelatorioGenericController?acao=cartoesFuncionario.jasper"><span title="Relatorio">Relatório de Cartões</span></a>
+        <li><a href="RelatorioGenericController?acao=cartoesFuncionario"><span title="Relatorio">Relatório de Cartões</span></a>
         </li>
-        <li><a href="RelatorioGenericController?acao=Informe.jasper"><span title="Relatorio">Relatório de
+        <li><a href="RelatorioGenericController?acao=Informe"><span title="Relatorio">Relatório de
                     Informes</span></a></li>
-        <li><a href="RelatorioGenericController?acao=Horarios.jasper"><span title="Relatorio">Relatório de
+        <li><a href="RelatorioGenericController?acao=Horarios"><span title="Relatorio">Relatório de
                     Horários</span></a></li>
-        <li><a href="RelatorioGenericController?acao=CargosFunc.jasper"><span title="Relatorio">Relatório de
+        <li><a href="RelatorioGenericController?acao=CargosFunc"><span title="Relatorio">Relatório de
                     Funcionários</span></a></li>
     </ul>
 
