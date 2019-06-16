@@ -32,7 +32,7 @@ public class RelatorioGenericController extends HttpServlet {
             String relatorio = getServletContext().getRealPath("/WEB-INF/classes/relatorio/" + acao+".jasper");
             JasperPrint jp = JasperFillManager.fillReport(relatorio, parametros, conexao);
             byte[] relat = JasperExportManager.exportReportToPdf(jp);
-            response.setHeader("Content-Disposition", "attachment;filename=relatorioCargos.pdf");
+            response.setHeader("Content-Disposition", "attachment;filename=relatorioFontejr.pdf");
             response.setContentType("application/pdf");
             response.getOutputStream().write(relat);
         } catch (SQLException ex) {
