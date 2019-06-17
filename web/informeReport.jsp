@@ -13,7 +13,7 @@
     </head>
     <body>
         <h>Relatório de Informes por funcionário</h>
-        <form action="RelatorioGenericController?acao=InformeParam.jasper" method="post">
+        <form action="RelatorioInformeParamController" method="post">
             Escolha um funcionário
             <input type="text" name="paramFunc"/><br/> 
             <input type="submit"/>
